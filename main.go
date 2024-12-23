@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
+	"runtime/debug"
 )
 
 var Version string
@@ -28,5 +29,6 @@ func Execute() {
 }
 
 func main() {
+	fmt.Println(debug.ReadBuildInfo())
 	Execute()
 }
