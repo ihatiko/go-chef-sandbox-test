@@ -29,6 +29,7 @@ func Execute() {
 }
 
 func main() {
-	fmt.Println(debug.ReadBuildInfo())
+	version, _ := debug.ReadBuildInfo()
+	fmt.Println(version.Main.Version)
 	Execute()
 }
