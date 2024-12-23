@@ -6,12 +6,14 @@ import (
 	"os"
 )
 
+var Version string
+
 var rootCmd = &cobra.Command{
 	Use:   "test",
 	Short: "test",
 	Long:  "test",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("test called %v\n", os.Args)
+		fmt.Printf("test called version: %s, %v\n", Version, os.Args)
 	},
 }
 
