@@ -7,29 +7,35 @@ import (
 	"runtime/debug"
 )
 
-var Version string
-
-var rootCmd = &cobra.Command{
+var testCmd = &cobra.Command{
 	Use:   "test",
 	Short: "test",
 	Long:  "test",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("test called version: %s, %v\n", Version, os.Args)
+		fmt.Printf("test called %v\n", os.Args)
 	},
 }
 
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
+var versionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "version",
+	Long:  "version",
+	Run: func(cmd *cobra.Command, args []string) {
+		version, _ := debug.ReadBuildInfo()
+		fmt.Println(version.Main.Version)
+	},
+}
+
+func main() {
+	root := &cobra.Command{}
+	root.AddCommand(testCmd, versionCmd)
+	fmt.Println(root.Version)
+	if err := root.Execute(); err != nil {
 		_, err := fmt.Fprintf(os.Stderr, "Oops. An error while executing command '%s'\n", err)
 		if err != nil {
 			return
 		}
 		os.Exit(1)
 	}
-}
 
-func main() {
-	version, _ := debug.ReadBuildInfo()
-	fmt.Println(version.Main.Version)
-	Execute()
 }
